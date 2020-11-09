@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .tab ul {
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tab ul li {
+            box-sizing: border-box;
+            padding: 0;
+            float: left;
+            width: 100px;
+            height: 45px;
+            line-height: 45px;
+            list-style: none;
+            text-align: center;
+            border-top: 1px solid blue;
+            border-right: 1px solid blue;
+            cursor: pointer;
+        }
+
+        .tab ul li:first-child {
+            border-left: 1px solid blue;
+        }
+
+        .tab ul li.active {
+            background-color: orange;
+        }
+
+        .tab div {
+            background-color: cornsilk;
+            width: 300px;
+            height: 300px;
+            display: none;
+            text-align: center;
+            font-size: 30px;
+            line-height: 300px;
+            border: 1px solid blue;
+            border-top: 0px;
+
+        }
+
+        .tab div.current {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='app'>
+        <div class="tab">
+            <ul>
+                <li v-on:click='change(index)' v-bind:class='currentIndex==index?"active":""' :key='item.id'
+                    v-for='(item,index) in list'>{{item.title}}</li>
+
+            </ul>
+            <div v-bind:class='currentIndex==index?"current":""' :key='item.id' v-for='(item,index) in list'>
+                <img v-bind:src="item.url" alt="">
+            </div>
+
+
+        </div>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script>
+        //用对象的方式存储数据，多组对象用数组的方式存储  
+        //key指令具有唯一性，提高Vue遍历时的执行效率，可通过id 或者index值的方式，id和索引具有唯一性
+        //添加一组数据表示选项卡当前索引，直接添加是找不到类名的  
+        //通过三元表达式的方式判断当前索引currentIndex是否等于  
+        //遍历中的索引，如果为ture,给他添加类名，如果为flsa给取消，代替操作dom排他思想  
+        //然后给li添加绑定事件，实现功能
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                currentIndex: 0,//选项卡当前的索引
+                list: [{
+                    id: 1,
+                    title: '李晓琴1',
+                    url: '../src/assets/LXQ.png',
+                }, {
+                    id: 2,
+                    title: '李晓琴2',
+                    url: '../src/assets/LXQ2.png',
+                }, {
+                    id: 1,
+                    title: '李晓琴3',
+                    url: '../src/assets/LXQ5.png',
+                }]
+            },
+            methods: {
+                change: function (index) {
+                    //是改类名，点到谁就把类名加到它身上  
+                    //通过 currentIndex操作类名    
+                    //事件绑定传参,点到谁就把他的索引传过来赋值给currentIndex      
+                    //三元表达式为true，类名添加成功
+                    this.currentIndex = index;
+                }
+
+            },
+
+        })
+    </script>
+</body>
+
+</html>
