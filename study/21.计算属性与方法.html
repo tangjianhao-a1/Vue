@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>{{msg}}</div>  
+        <div>{{msg.split('').reverse().join('-')}}</div>  
+        <div>{{reverseString}}</div>  
+        <div>{{reverseString}}</div> 
+        <div>{{ reverseMessage()}}</div>
+        <div>{{ reverseMessage()}}</div>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script>  
+    //把表达式的逻辑抽取出来，使用计算属性可以使摸板更加简洁  
+    //基于data里的数据computed有缓存效果，不用重复调用执行很多次，节约开发性能,数据变了则重新计算  
+    //方法不存在缓存，
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'hello',  
+                num: 100,
+            },
+            methods: {
+                reverseMessage: function() {
+                    console.log('methods');
+                    return this.msg.split('').reverse().join('')
+                }
+            },
+            computed: {
+                reverseString: function() {  
+                    console.log('computed');
+                   // return this.msg.split('').reverse().join('')
+                   var total = 0;  
+                   for(var i = 0; i <= this.num; i++) {
+                       total += i;
+                   }
+                   return total;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
