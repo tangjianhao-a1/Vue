@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <!--  <HelloWorld></HelloWorld> -->
+        <hello-world></hello-world>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script>
+        //组件注册  
+        /*  Vue.component('button-counter',{
+             data : function() {
+                 return {
+                     count: 0
+                 }
+             },
+             template: '<div><button @click="handle">点击了{{count}}次</button><button>测试</button></div>',
+             methods: {
+                 handle: function() {
+                     this.count +=2;
+                 }
+             }
+         }) */
+        //1.data必须是一个函数  
+        //2.组件摸板内容必须是单个跟元素，div包裹  
+        //3.组件摸板内容可以是摸板字符串，可读性高  
+        //4.组件命名方式短横线方式或驼峰方式     
+        //5.驼峰式命名组件在普通标签摸板中无法使用，必须用短横线的方式
+        Vue.component('HelloWorld', {
+            data: function () {
+                return {
+                    msg: 'HelloWorld',
+                }
+            },
+            template: '<div>{{msg}}</div>'
+        })
+        Vue.component('button-counter', {
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: `
+            <div>
+                <button @click="handle">点击了{{count}}次</button>
+                <button>测试123</button>  
+                <HelloWorld></HelloWorld>
+            </div>`,
+            methods: {
+                handle: function () {
+                    this.count += 2;
+                }
+            }
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>
