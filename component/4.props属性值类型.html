@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>{{pmsg}}</div>
+        <menu-item :pstr='pstr' :pnum='12' :pboo=true :parr='parr' :pobj='pobj'></menu-item>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script>
+        //pnum='12'取消冒号为字符串类型,布尔值型取消冒号为字符串型
+        Vue.component('menu-item', {
+            props: ['pstr', 'pnum', 'pboo', 'parr', 'pobj'],
+            template: `
+            <div>
+            <div>{{pstr}}</div>  
+            <div>{{12 + pnum}}</div>  
+            <div>{{pboo}}</div>  
+            <div>{{parr}}</div>    
+            <div>{{pobj}}</div>
+            <div>
+            <span>{{pobj.name}}</span>  
+            <span>{{pobj.age}}</span>  
+            <span>{{pobj.sex}}</span>
+            </div>
+            <ul>
+            <li :key='index' v-for='(item,index) in parr' style = 'list-style: none'>{{item}}</li>
+            </ul>
+            </div>
+            `
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pmsg: '父组件中的内容',
+                pstr: '唐建豪',
+                parr: ['唐三', '唐四', '唐五'],
+                pobj: {
+                    name: '唐三',
+                    age: 27,
+                    sex: '男'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

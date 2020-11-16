@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div v-bind:style='{fontSize: fontSize + "px"}'>{{pmsg}}</div>
+        <menu-item :pars='pars' @enlargn-test='handel($event)'></menu-item>
+    </div> 
+    <script src="../src/vue.js"></script>  
+    <script>
+        Vue.component('menu-item',{
+            props: ['pars'],
+            template: `
+            <div>
+            <ul>
+            <li :key='index' v-for='(item,index) in pars'>{{item}}</li>
+            </ul>  
+            <button @click='$emit("enlargn-test", 3)'>扩大父组件中字体大小</button>
+            <button @click='$emit("enlargn-test", 30)'>扩大父组件中字体大小</button>
+            </div>
+            `
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pars: ['唐三','唐四','唐五'],
+                pmsg: '父组件的内容',  
+                fontSize: 1
+            },
+            methods: {
+                handel: function(a) {
+                    this.fontSize += a;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
