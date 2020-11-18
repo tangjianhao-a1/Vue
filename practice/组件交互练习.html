@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-bind:style='{fontSize: fontSize + "px"}'>{{msg}}</div>
+        <div><button @click='handle'>销毁组件1事件</button></div>
+        <test-one></test-one>
+        <test-two @gb-style='hand($event)' :title='tang'></test-two>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script>
+        var hub = new Vue();
+        Vue.component('test-one', {
+            data: function () {
+                return {
+                    num: 0
+                }
+            },
+            template: `
+        <div>
+        <button @click = 'handle'>组件1按钮</button>
+        <div>组件1内容{{num}}</div>
+        </div>
+            `,
+            methods: {
+                handle: function () {
+                    hub.$emit('tw-ev', 5)
+                }
+            },
+            mounted: function () {
+                hub.$on('boj-even', (a) => {
+                    this.num += a;
+                })
+            }
+        });
+        Vue.component('test-two', {
+            props: ['title'],
+            data: function () {
+                return {
+                    num: 0
+                }
+            },
+            template: `
+            <div>
+            <div>
+            <button @click='handle'>组件2按钮</button>  
+             </div>
+             <div>
+            <button @click='$emit("gb-style",10)'>组件2操作父组件</button>  
+             </div>
+            <div>组件2内容：{{num}}</div>
+            <div>{{title}}<div>
+            </div>
+            `,
+            methods: {
+                handle: function () {
+                    hub.$emit('boj-even', 2)
+                }
+            },
+            mounted: function () {
+                hub.$on('tw-ev', (b) => {
+                    this.num += b;
+                })
+            }
+
+        });
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '父组件内容',  
+                tang: '唐',
+                fontSize: 5
+                
+            },
+            methods: {
+                handle: function () {
+                    hub.$off('tw-ev')
+                },
+                hand: function (val) {
+                    this.fontSize += val;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

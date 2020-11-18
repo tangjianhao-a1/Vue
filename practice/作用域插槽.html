@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .curee {
+            color:coral
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+    <test-one :list='list' >
+        <template slot-scope='slotName'>
+            <strong v-if='slotName.stylyName.id==4' class="curee">{{slotName.stylyName.name}}</strong>
+        </template>
+    </test-one>
+    </div>  
+    <script src="../src/vue.js"></script>
+    <script>  
+        Vue.component('test-one',{
+            props: ['list'],
+            template: `
+            <div>
+            <li :key='item.id' v-for='item in list'>
+            <slot :stylyName='item'>{{item.name}}</slot>
+            </li>
+            </div>
+            `
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [{
+                    id: 1,
+                    name: '张三',
+                },{
+                    id: 2,
+                    name: '李四',
+                },{
+                    id: 3,
+                    name: '王二',
+                },{
+                    id: 4,
+                    name: '麻子'
+                }]
+            }
+        })
+    </script>
+</body>
+</html>

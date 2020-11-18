@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>  
+    <style>
+        .currt {
+            color: burlywood;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+    <fruit-list :list='list'>
+        <template slot-scope='slotStyle'>
+            <strong v-if='slotStyle.styles.id==3' class="currt">{{slotStyle.styles.name}}</strong>
+        </template>
+    </fruit-list>
+    </div>
+    <script src="../src/vue.js"></script>  
+    <script>
+        Vue.component('fruit-list',{
+            props: ['list'],
+            template: `
+         <div>
+         <li :key='item.id' v-for='item in list'>
+         <slot :styles='item'>{{item.name}}</slot>
+         </li>
+         </div>   
+         `
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [{
+                    id: 1,
+                    name: 'apple'
+                },{
+                    id: 2,
+                    name: 'orange'
+                },{
+                    id: 3,
+                    name: 'banana'
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

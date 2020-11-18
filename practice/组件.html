@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>{{name}}</div>
+        <my-one :title='ptitle'></my-one>
+        <my-two :lick='plick'></my-two>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script>
+        Vue.component('my-one', {
+            props: ['title'],
+            data: function () {
+                return {
+                    name: '李四'
+                }
+            },
+            template: `
+            <div>{{name + title}}</div>
+            `
+        })
+        Vue.component('my-two', {
+            props: ['lick'],
+            data: function () {
+                return {
+                    name: '王二'
+                }
+            },
+            template: `<div>{{name + lick}}</div>`
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '张三',
+                ptitle: '男',
+                plick: '打篮球',
+
+            }
+        })
+    </script>
+</body>
+
+</html>

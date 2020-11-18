@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-bind:style='[fontSize,styleObj]'>{{msg}}</div>
+        <an-st @change-content='handel($event)'></an-st>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script>
+        Vue.component('an-st', {
+            data: function () {
+                return {
+
+                }
+            },
+            template: `
+            <button @click='$emit("change-content", 1000)'>改变父组件的内容</button>
+            `
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '父组件中的内容',
+                fontSize: {
+                    fontSize: 1,
+                },
+                styleObj: {
+                    backgroundColor: 'green',
+                    width: '100px',
+                    height: '200px',
+                }
+
+            },
+            methods: {
+                handel: function (a) {
+                    this.styleObj.backgroundColor = 'red';
+                    this.styleObj.width = '300px';
+                    this.styleObj.height = a + 'px';
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

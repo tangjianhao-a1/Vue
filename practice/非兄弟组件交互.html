@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+    <test-one></test-one>
+    <test-two></test-two>
+    <test-three></test-three>
+    <test-four></test-four>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script>
+        var hub = new Vue();
+        Vue.component('test-one',{
+            data: function() {
+                return {
+                    num:0,
+                }
+            },
+            template: `
+            <div>
+            <div>组件1:{{num}}</div>
+            <div>
+            <button @click='handle'>组件1</button>
+            </div>
+            </div>
+            `,
+            methods: {
+                handle: function() {
+                    hub.$emit('two-ts',5)
+                }
+            },
+            mounted: function() {
+                hub.$on('one-ts',(a) => {
+                    this.num += a;
+                })
+            }
+        })
+        Vue.component('test-two',{
+            data: function() {
+                return {
+                    num:0
+                }
+            },
+            template: `
+            <div>
+            <div>组件2:{{num}}</div>
+            <div>
+            <button @click='handle'>组件2</button>
+            <div>
+            </div>
+            `,
+            methods: {
+                handle: function() {
+                    hub.$emit('one-ts',1)
+                }
+            },
+            mounted: function() {
+                hub.$on('two-ts',(b) => {
+                    this.num += b;
+                })
+            }
+        });
+        Vue.component('test-three',{
+           
+            template: `
+            <div>
+            <button @click='handle'>组件3</button>
+            </div>
+            `,
+            methods: {
+                handle: function() {
+                    hub.$emit('tjh-lxq',100)
+                }
+            }
+        });
+        Vue.component('test-four',{
+            data: function() {
+                return {
+                    num: 0,
+                }
+            },
+            template: `
+            <div>
+                <div>{{num}}</div>
+            </div>
+            `,
+            mounted: function() {
+                hub.$on('tjh-lxq',(val) => {
+                    this.num += val;
+                })
+            }
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        })
+    </script>
+</body>
+</html>
