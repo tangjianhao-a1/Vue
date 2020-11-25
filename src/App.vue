@@ -54,9 +54,7 @@
   <script>
 import axios from "axios";
 export default {
-  mounted() {
-    this.queryUserInfo();
-  },
+ 
   methods: {
     queryUserInfo() {
       axios.get("http://81.68.177.149:8080/userInfo/query").then((res) => {

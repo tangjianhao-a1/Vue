@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    input {
+        width: 165px;
+        margin-bottom: 5px;
+        line-height: 35px;
+        height: 27px;
+        width: 165px;
+        border: #ebebeb 1px solid;
+        text-indent: 5px;
+    }
+
+    button {
+        font-size: 14px;
+        border: #ebebeb 1px solid;
+        text-align: center;
+        height: 30px;
+        width: 80px;
+        border-radius: 10px;
+    }
+
+    input,
+    button {
+        outline: none;
+        cursor: pointer;
+    }
+
+
+    .train {
+        margin: 100px auto;
+        width: 1000px;
+        height: 500px;
+    }
+
+    td,
+    th {
+        border: 1px solid #ebebeb;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 831px;
+        height: 244px;
+        text-align: center;
+        color: #7c7cad;
+    }
+
+    thead tr {
+        height: 40px;
+        background-color: #f0f0f0;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <div class="train">
+            <div>
+                <label for="DepartStation">出发站：
+                </label>
+                <input type="text" id="DepartStation" v-model='DepartStation'>
+                <label for="ArriveStation">到达站：
+                </label>
+                <input type="text" id="ArriveStation" v-model='ArriveStation'>
+                <label for="daodashijian">到达时间：
+                </label>
+                <input type="text" id="daodashijian" v-model='daodashijian'>
+                <button @click='handle'>查询</button>
+            </div>
+            <table cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>出发站</th>
+                        <th>到达站</th>
+                        <th>列车号</th>
+                        <th>出发时间</th>
+                        <th>到达时间</th>
+                        <th>车票信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr :key='item.index' v-for='(item,index) in bodys'>
+                        <td>{{item.DepartStation}}</td>
+                        <td>{{item.ArriveStation}}</td>
+                        <td>{{item.liechehao}}</td>
+                        <td>{{item.chufashijian}}</td>
+                        <td>{{item.daodashijian}}</td>
+                        <td>{{item.chepiaoxinxi}}</td>
+                    </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                DepartStation: '',
+                ArriveStation: '',
+                daodashijian: '',
+
+                bodys: []
+            },
+            methods: {
+                handle() {
+                    if (this.DepartStation == null) {
+                        alert("请输入出发站");
+                        return;
+                    }
+                    if (this.ArriveStation == null) {
+                        alert("请输入到达站");
+                        return;
+                    }
+                    if (this.daodashijian == null) {
+                        alert("请输入到达时间");
+                        return;
+                    }
+                    axios
+                        .post('https://m.ctrip.com/restapi/soa2/14666/json/GetBookingByStationV3ForPC',
+                            { "DepartStation": this.DepartStation, "ArriveStation": this.ArriveStation, "DepartDate": this.daodashijian, "ChannelName": "ctrip.pc" }
+                        )
+                        .then(response => {
+                            let list = response.data.ResponseBody.TrainItems;
+                            let resultList = [];
+                            for (let i = 0; i < list.length; i++) {
+                                let obj = list[i];
+                                let result = {
+                                    "DepartStation": obj.TicketResult.DepartureStationName,
+                                    "ArriveStation": obj.TicketResult.ArrivalStationName,
+                                    "liechehao": obj.TrainName,
+                                    "chufashijian": obj.TicketResult.DepartureTime,
+                                    "daodashijian": obj.TicketResult.ArrivalTime
+                                };
+
+                                //车票信息处理稍微复杂一些，需要拼接字符串
+                                //但整体下来起始也没什么难点
+                                let chepiaoxinxi = "";
+                                let ticketItems = obj.TicketResult.TicketItems;
+                                for (let j = 0; j < ticketItems.length; j++) {
+                                    let ticketItem = ticketItems[j];
+                                    chepiaoxinxi = chepiaoxinxi + ticketItem.SeatTypeName + "¥" + ticketItem.ShowPrice + "(" + ticketItem.Inventory + "张) "
+                                }
+                                result.chepiaoxinxi = chepiaoxinxi;
+
+                                resultList.push(result);
+                            }
+                            this.bodys = resultList;
+                        })
+                        .catch(function (error) { // 请求失败处理
+                            console.log(error);
+                        });
+
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>
