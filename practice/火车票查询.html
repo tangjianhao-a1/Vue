@@ -154,6 +154,18 @@
             },
             methods: {
                 handle: function () {
+                    if (!this.DepartStation) {
+                        alert("请输入出发站");
+                        return;
+                    }
+                    if (!this.ArriveStation) {
+                        alert("请输入到达站");
+                        return;
+                    }
+                    if (!this.daodashijian) {
+                        alert("请输入到达时间");
+                        return;
+                    };
                     let arr = [];
                     this.bodys.forEach(v => {
                         if (v.DepartStation === this.DepartStation && v.ArriveStation === this. ArriveStation && 
