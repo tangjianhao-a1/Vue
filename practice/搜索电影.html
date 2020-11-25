@@ -56,6 +56,10 @@
         height: 40px;
         background-color: #f0f0f0;
     }
+
+    [v-cloak] {
+        display: none;
+    }
 </style>
 
 <body>
@@ -83,8 +87,8 @@
                 </thead>
                 <tbody>
                     <tr :key='item.index' v-for='(item,index) in subjects'>
-                        <td>{{item.rate}}</td>
-                        <td>{{item.title}}</td>
+                        <td v-cloak>{{item.rate}}</td>
+                        <td v-cloak>{{item.title}}</td>
 
                     </tr>
 
@@ -3731,11 +3735,13 @@
                     } */
 
                     let b = this.subjects.filter(v => {
-                        //我在想怎么模糊匹配
-                        //v.title.includes(this.title)
-                        return v.title === this.title || v.rate >= this.rate && v.rate <= this.rata
+                        
+                        return v.title.includes(this.title) || v.rate >= this.rate && v.rate <= this.rata 
+                        
                     })
+                 
                     this.subjects = b;
+                   
                 }
             },
             mounted() {
