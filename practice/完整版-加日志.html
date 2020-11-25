@@ -112,15 +112,15 @@
             },
             methods: {
                 handle() {
-                    if (this.DepartStation == null) {
+                    if (!this.DepartStation) {
                         alert("请输入出发站");
                         return;
                     }
-                    if (this.ArriveStation == null) {
+                    if (!this.ArriveStation) {
                         alert("请输入到达站");
                         return;
                     }
-                    if (this.daodashijian == null) {
+                    if (!this.daodashijian) {
                         alert("请输入到达时间");
                         return;
                     }
@@ -130,8 +130,8 @@
                         )
                         .then(response => {
                             let list = response.data.ResponseBody.TrainItems;   
-                            console.log(list);
-                            console.log(JSON.stringify(response.data));
+                            
+                            console.log((response.data));
                             let resultList = [];
                             for (let i = 0; i < list.length; i++) {
                                 let obj = list[i];
