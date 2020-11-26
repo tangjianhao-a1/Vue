@@ -3726,7 +3726,7 @@
 
             methods: {
                 handle: function () {
-                    /* if (!this.rate) {
+                     if (!this.rate) {
                         alert('请输入最低评分')
                         return
                     }
@@ -3736,7 +3736,7 @@
                     }
                     if (!this.title) {
                         alert('请输入电影名')
-                    } */
+                    } 
 
                     let a = this.subjects.filter(v => {
                         return v.rate >= this.rate && v.title.includes(this.title) /*v.rate <= this.rates */
