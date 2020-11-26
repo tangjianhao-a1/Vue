@@ -3740,17 +3740,17 @@
  */
                     let a = this.subjects.filter(v => {
                         /* return  v.title.includes(this.title) && v.rate >= this.rate && v.rate <= this.rates */  
-                        if(!this.rate == null) {  
+                        if(!this.rate == '') {  
                             if(this.rate > v.rate) {
                                 return false;
                             }
                         }
-                        if(!this.title == null) {
+                        if(!this.title == '') {
                             if(!v.title.includes(this.title)) {
                                 return false;
                             }
                         }
-                        if(!this.rates == null) {
+                        if(!this.rates == '') {
                             if(this.tates < v.rate) { 
                                 return false
                             }
