@@ -66,15 +66,15 @@
     <div id="app">
         <div class="train">
             <div>
-                <label for=" rate">最低评分：
+                <label for="inputs.rate">最低评分：
                 </label>
-                <input type="text" id="rate" v-model=' rate'>
-                <label for="rates">最高评分：
+                <input type="text" id="inputs.rate" v-model='inputs.rate'>
+                <label for="inputs.rates">最高评分：
                 </label>
-                <input type="text" id="rates" v-model='rates'>
-                <label for="title">电影名称：
+                <input type="text" id="inputs.rates" v-model='inputs.rates'>
+                <label for="inputs.title">电影名称：
                 </label>
-                <input type="text" id="title" v-model='title'>
+                <input type="text" id="inputs.title" v-model='inputs.title'>
                 <button @click='handle'>查询</button>
             </div>
             <table cellspacing="0">
@@ -86,10 +86,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr :key='item.index' v-for='(item,index) in subjects'>
+                    <tr :key='item.index' v-for='(item,index) in showsubjects'>
                         <td v-cloak>{{item.rate}}</td>
                         <td v-cloak>{{item.title}}</td>
-
                     </tr>
 
             </table>
@@ -103,12 +102,13 @@
             el: '#app',
             data: function () {
                 return {
+                    inputs: {
+                        rate: '',
+                        rates: '',
+                        title: '',
+                    },
 
-                    rate: '',
-                    rates: '',
-                    title: '',
-
-
+                    showsubjects: [],
 
                     subjects: [
                         {
@@ -3726,40 +3726,43 @@
 
             methods: {
                 handle: function () {
-                     /* if (!this.rate) {
-                        alert('请输入最低评分')
-                        return
-                    }
-                    if (!this.rata) {
-                        alert('请输入最高评分')
-                        return
-                    }
-                    if (!this.title) {
-                        alert('请输入电影名')
-                    } 
- */
+                    /* if (!this.rate) {
+                       alert('请输入最低评分')
+                       return
+                   }
+                   if (!this.rata) {
+                       alert('请输入最高评分')
+                       return
+                   }
+                   if (!this.title) {
+                       alert('请输入电影名')
+                   } 
+*/
                     let a = this.subjects.filter(v => {
-                        /* return  v.title.includes(this.title) && v.rate >= this.rate && v.rate <= this.rates */  
-                        if(!this.rate == '') {  
-                            if(this.rate > v.rate) {
+                        /* return  v.title.includes(this.title) && v.rate >= this.rate && v.rate <= this.rates */
+                        if (this.inputs.rate != null && this.inputs.rate != '') {
+                            if (this.inputs.rate >= v.rate) {
                                 return false;
                             }
                         }
-                        if(!this.title == '') {
-                            if(!v.title.includes(this.title)) {
+                        if (this.inputs.title != null && this.inputs.title != '') {
+                            if (!v.title.includes(this.inputs.title)) {
                                 return false;
                             }
                         }
-                        if(!this.rates == '') {
-                            if(this.tates < v.rate) { 
+                        if (this.inputs.rates != null && this.inputs.rates != '') {
+                            if (this.inputs.rate <= v.rates) {
                                 return false
                             }
                         }
-                           return true;     
+
+                        return true;
 
                     })
-                     this.subjects = a;
-                     console.log(a);
+                    
+                    this.showsubjects = a;
+                    this.inputs = {};
+
 
                 }
             },
