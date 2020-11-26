@@ -3739,10 +3739,27 @@
                     } 
  */
                     let a = this.subjects.filter(v => {
-                        return  this.rate == null || v.title.includes(this.title) && v.rate >= this.rate && v.rate <= this.rates
+                        /* return  v.title.includes(this.title) && v.rate >= this.rate && v.rate <= this.rates */  
+                        if(!this.rate == null) {  
+                            if(this.rate > v.rate) {
+                                return false;
+                            }
+                        }
+                        if(!this.title == null) {
+                            if(!v.title.includes(this.title)) {
+                                return false;
+                            }
+                        }
+                        if(!this.rates == null) {
+                            if(this.tates < v.rate) { 
+                                return false
+                            }
+                        }
+                           return true;     
 
                     })
                      this.subjects = a;
+                     console.log(a);
 
                 }
             },
