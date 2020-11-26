@@ -3726,25 +3726,23 @@
 
             methods: {
                 handle: function () {
-                    //当用户输入不为空的情况下
                     if (!this.rate == null) {
-                        let a = this.subjects.filter(v => {
-                            return v.rate >= this.rate && v.title.includes(this.title) 
-                            return
-
-                        })
-                        this.subjects = a;
-                        return true
+                        alert('请输入最低评分')
+                        return
                     }
                    /*  if (!this.rata) {
                         alert('请输入最高评分')
                         return
-                    }
-                    if (!this.title) {
+                    } */
+                  /*   if (!this.title) {
                         alert('请输入电影名')
                     } */
 
+                    let a = this.subjects.filter(v => {
+                        return v.rate >= this.rate && v.title.includes(this.title) /*v.rate <= this.rates */
 
+                    })
+                    this.subjects = a;
 
                 }
             },
