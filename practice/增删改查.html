@@ -86,8 +86,8 @@
     <div id="app">
         <h1>公司人员名单</h1>
         <div class="query">
-            <input type="text" placeholder="请输入姓名" class="xingming">
-            <button>查询</button>
+            <input type="text" placeholder="请输入姓名" class="xingming" v-model='obj.sousuo'>
+            <button @click="chaxun">查询</button>
         </div>
         <div class="add">
             <input type="text" placeholder="请输入姓名（必填条件）" v-model='obj.name'>
@@ -106,9 +106,9 @@
             <tbody>
                 <tr :key='item.id' v-for="(item,id) in use">
                     <td>{{item.id}}</td>
-                    <td>{{item.name}}</td>
-                    <td>{{item.beizhu}}</td>
-                    <td><span class="delete">删除</span><span class="deit">修改</span></td>
+                    <td>{{item.username}}</td>
+                    <td>{{item.noteInfo}}</td>
+                    <td><span class="delete" @click='del(id)'>删除</span><span class="deit">修改</span></td>
                 </tr>
             </tbody>
         </table>
@@ -122,40 +122,60 @@
             data: function () {
                 return {
                     obj: {
+                        sousuo: '',
                         name: '',
                         beizhu: '',
                     },
-                    use: [{
-                        id: 1,
-                        name: '张三',
-                        beizhu: '脾气大'
-                    }, {
-                        id: 2,
-                        name: '张三',
-                        beizhu: '脾气大'
-                    }, {
-                        id: 3,
-                        name: '张三',
-                        beizhu: '脾气大'
-                    }]
+                    use: [],
                 }
             },
             methods: {
+                query() {
+                    axios.get('http://81.68.177.149:8080/userInfo/query').then((res) => {
+                        console.log(res.data);
+                        this.use = res.data;
+                    });
+                },
                 add: function () {
-                    //添加数据，原则上是往use里添加输入框内容，是个对象  
-                    //如name：输入框内容= this.name  
-                    //必填条件  
-                   if(!this.obj.name || !this.obj.beizhu) {
-                       alert('必填不能为空');  
-                       this.obj = {};
-                       return;
-                   }
-                    this.use.push({
-                        name: this.obj.name,
-                        beizhu: this.obj.beizhu,
-                    })
-                    this.obj = {};
-                }
+                    //请求方式地址绑定
+                    axios
+                        .post('http://81.68.177.149:8080/userInfo/add', {
+                            //后端数据库对象名：前端发送请求输入框内容 后端的对象名是死的由后端定义命名
+                            username: this.obj.name,
+                            noteInfo: this.obj.beizhu,
+                        })
+                        //then请求成功后怎么样，catch请求失败怎么样 
+                        .then(() => {
+                            if (!this.obj.name || !this.obj.beizhu) {
+                                alert('必填不能为空')
+                                return
+                            }
+                            this.obj = {};
+                            this.query()
+                            alert('新增成功')
+                        }).catch(() => {
+                            alert('请求失败')
+                        })
+
+                },
+                del: function (id) {
+                   this.use.splice(id, 1)
+                
+                },
+
+                chaxun: function () {
+                    axios.get('http://81.68.177.149:8080/userInfo/query')
+                        .then((vs) => {
+                            let list = vs.data;
+                            let a = list.filter((vs) => {
+                                if (!this.obj.sousuo) return false;
+                                return vs.username.includes(this.obj.sousuo)
+                            });
+                            this.use = a;
+                            this.obj = {};
+                        })
+                },
+
             }
         })
     </script>
