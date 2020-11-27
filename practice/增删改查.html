@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    td,
+    th {
+        border: 1px solid #ebebeb;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <div class="query">
+            <input type="text">
+            <button>查询</button>
+        </div>
+        <div class="add">
+            用户名：<input type="text">
+            备注： <input type="text">
+            <button>新增</button>
+        </div>
+        <table sellspacing="0">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>名称</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td><span>修改</span><span>删除</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <script>
+
+        var vm = new new ({
+            el: '#app',
+            data: function () {
+                return {
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
