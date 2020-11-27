@@ -90,8 +90,8 @@
             <button>查询</button>
         </div>
         <div class="add">
-            <input type="text" placeholder="请输入姓名" v-model='name'>
-            <input type="text" placeholder="请输入备注" v-model='beizhu'>
+            <input type="text" placeholder="请输入姓名" v-model='obj.name'>
+            <input type="text" placeholder="请输入备注" v-model='obj.beizhu'>
             <button @click="add">新增</button>
         </div>
         <table sellspacing="0">
@@ -121,8 +121,10 @@
             el: '#app',
             data: function () {
                 return {
-                    name:'',  
-                    beizhu: '',
+                    obj: {
+                        name: '',
+                        beizhu: '',
+                    },
                     use: [{
                         id: 1,
                         name: '张三',
@@ -141,12 +143,18 @@
             methods: {
                 add: function () {
                     //添加数据，原则上是往use里添加输入框内容，是个对象  
-                    //如id：输入框内容= this.name
+                    //如name：输入框内容= this.name  
+                    //必填条件  
+                    if(!this.obj.name) {
+                        alert('请输入名称')  
+                        return
+                    };
+                    if(!this.obj.beizhu) {
+                        alert('请输入备注')
+                    }
                     this.use.push({
-                        id: 1,  
-                        name: '张三',
-                        beizhu: '脾气大'
-
+                        name: this.obj.name,
+                        beizhu: this.obj.beizhu,
                     })
                 }
             }
