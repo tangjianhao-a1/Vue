@@ -90,8 +90,8 @@
             <button>查询</button>
         </div>
         <div class="add">
-            <input type="text" placeholder="请输入姓名" v-model='obj.name'>
-            <input type="text" placeholder="请输入备注" v-model='obj.beizhu'>
+            <input type="text" placeholder="请输入姓名（必填条件）" v-model='obj.name'>
+            <input type="text" placeholder="请输入备注（必填条件）" v-model='obj.beizhu'>
             <button @click="add">新增</button>
         </div>
         <table sellspacing="0">
@@ -145,7 +145,10 @@
                     //添加数据，原则上是往use里添加输入框内容，是个对象  
                     //如name：输入框内容= this.name  
                     //必填条件  
-                   if(!this.obj.name || !this.obj.beizhu) return;
+                   if(!this.obj.name || !this.obj.beizhu) {
+                       alert('必填不能为空')  
+                       return;
+                   }
                     this.use.push({
                         name: this.obj.name,
                         beizhu: this.obj.beizhu,
