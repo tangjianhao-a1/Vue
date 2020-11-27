@@ -140,7 +140,14 @@
             },
             methods: {
                 add: function () {
-                    //添加数据
+                    //添加数据，原则上是往use里添加输入框内容，是个对象  
+                    //如id：输入框内容= this.name
+                    this.use.push({
+                        id: 1,  
+                        name: '张三',
+                        beizhu: '脾气大'
+
+                    })
                 }
             }
         })
