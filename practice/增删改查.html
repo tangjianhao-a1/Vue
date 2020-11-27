@@ -7,21 +7,89 @@
     <title>Document</title>
 </head>
 <style>
+    #app {
+        margin: 100px auto;
+        width: 1024px;
+    }
+
+    input {
+        margin-bottom: 5px;
+        line-height: 35px;
+        height: 40px;
+        width: 365px;
+        border: #ebebeb 1px solid;
+        text-indent: 5px;
+        border-radius: 5px;
+    }
+
+    button {
+        font-size: 14px;
+        background-color: #4e6ef2;
+        border: #ebebeb 1px solid;
+        text-align: center;
+        height: 45px;
+        width: 80px;
+        border-radius: 10px;
+    }
+
+    input,
+    button {
+        outline: none;
+        cursor: pointer;
+    }
+
     td,
     th {
         border: 1px solid #ebebeb;
+        height: 40px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 831px;
+        text-align: center;
+        color: #7c7cad;
+    }
+
+    thead tr {
+        background-color: #f0f0f0;
+    }
+
+    [v-cloak] {
+        display: none;
+    }
+
+    h1 {
+        width: 200px;
+        height: 30px;
+        margin-bottom: 20px;
+        margin-left: 300px;
+        color: #7c7cad;
+    }
+
+    .xingming {
+        width: 740px;
+
+    }
+    .delete {
+        margin-right: 25px;  
+        color: red;
+    }  
+    .deit {
+        color: #005732;
     }
 </style>
 
 <body>
     <div id="app">
+        <h1>公司人员名单</h1>
         <div class="query">
-            <input type="text">
+            <input type="text" placeholder="请输入姓名" class="xingming">
             <button>查询</button>
         </div>
         <div class="add">
-            用户名：<input type="text">
-            备注： <input type="text">
+            <input type="text" placeholder="请输入姓名">
+            <input type="text" placeholder="请输入备注">
             <button>新增</button>
         </div>
         <table sellspacing="0">
@@ -38,7 +106,7 @@
                     <td>1</td>
                     <td>2</td>
                     <td>3</td>
-                    <td><span>修改</span><span>删除</span></td>
+                    <td><span class="delete">删除</span><span class="deit">修改</span></td>
                 </tr>
             </tbody>
         </table>
@@ -47,7 +115,7 @@
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <script>
 
-        var vm = new new ({
+        var vm = new Vue({
             el: '#app',
             data: function () {
                 return {
