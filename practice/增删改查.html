@@ -71,10 +71,12 @@
         width: 740px;
 
     }
+
     .delete {
-        margin-right: 25px;  
+        margin-right: 25px;
         color: red;
-    }  
+    }
+
     .deit {
         color: #005732;
     }
@@ -88,9 +90,9 @@
             <button>查询</button>
         </div>
         <div class="add">
-            <input type="text" placeholder="请输入姓名">
-            <input type="text" placeholder="请输入备注">
-            <button>新增</button>
+            <input type="text" placeholder="请输入姓名" v-model='name'>
+            <input type="text" placeholder="请输入备注" v-model='beizhu'>
+            <button @click="add">新增</button>
         </div>
         <table sellspacing="0">
             <thead>
@@ -102,10 +104,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
+                <tr :key='item.id' v-for="(item,id) in use">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.beizhu}}</td>
                     <td><span class="delete">删除</span><span class="deit">修改</span></td>
                 </tr>
             </tbody>
@@ -119,7 +121,26 @@
             el: '#app',
             data: function () {
                 return {
-
+                    name:'',  
+                    beizhu: '',
+                    use: [{
+                        id: 1,
+                        name: '张三',
+                        beizhu: '脾气大'
+                    }, {
+                        id: 2,
+                        name: '张三',
+                        beizhu: '脾气大'
+                    }, {
+                        id: 3,
+                        name: '张三',
+                        beizhu: '脾气大'
+                    }]
+                }
+            },
+            methods: {
+                add: function () {
+                    //添加数据
                 }
             }
         })
