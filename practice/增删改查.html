@@ -146,13 +146,15 @@
                     //如name：输入框内容= this.name  
                     //必填条件  
                    if(!this.obj.name || !this.obj.beizhu) {
-                       alert('必填不能为空')  
+                       alert('必填不能为空');  
+                       this.obj = {};
                        return;
                    }
                     this.use.push({
                         name: this.obj.name,
                         beizhu: this.obj.beizhu,
                     })
+                    this.obj = {};
                 }
             }
         })
