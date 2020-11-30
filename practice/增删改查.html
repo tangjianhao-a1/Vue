@@ -94,7 +94,7 @@
     }
 
     .login {
-        /*  display: none;  */
+
         width: 512px;
         height: 280px;
         position: fixed;
@@ -133,14 +133,14 @@
         color: #000000;
     }
 
-    .login-bg {
-        /*   display: none;   */
+    .layer {
         width: 100%;
         height: 100%;
         position: fixed;
         top: 0px;
         left: 0px;
         background: rgba(0, 0, 0, .3);
+        display: none;
     }
 
     .login-button a {
@@ -227,7 +227,10 @@
                 </tbody>
             </table>
         </div>
-        <!-- 弹出框部分 -->
+    </div>
+
+    <!-- 遮挡层 -->
+    <div class="layer" v-if="layer">
         <div id="login" class="login">
             <!-- 弹出框头部部分 -->
             <div class="login-title">修改用户信息
@@ -252,8 +255,6 @@
 
         </div>
     </div>
-    <!-- 遮挡层 -->
-    <div class="login-bg"></div>
 
     </div>
     <script src="../src/vue.js"></script>
@@ -264,6 +265,7 @@
             el: '#app',
             data: function () {
                 return {
+                    layer:false,
                     obj: {
                         sousuo: '',
                         name: '',
