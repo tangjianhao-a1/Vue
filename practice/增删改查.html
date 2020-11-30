@@ -140,7 +140,6 @@
         top: 0px;
         left: 0px;
         background: rgba(0, 0, 0, .3);
-        display: none;
     }
 
     .login-button a {
@@ -197,6 +196,7 @@
 
 <body>
     <div id="app">
+        <!-- 内容主体部分 -->
         <div class="bodys">
             <h1>公司人员名单</h1>
             <div class="query">
@@ -222,40 +222,46 @@
                         <td>{{item.id}}</td>
                         <td>{{item.username}}</td>
                         <td>{{item.noteInfo}}</td>
-                        <td><span class="delete" @click='del(item.id)'>删除</span><span class="deit">修改</span></td>
+                        <td><span class="delete" @click='del(item.id)'>删除</span><span class="deit" @click='deit(item)'>修改</span></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-    </div>
 
-    <!-- 遮挡层 -->
-    <div class="layer" v-if="layer">
-        <div id="login" class="login">
-            <!-- 弹出框头部部分 -->
-            <div class="login-title">修改用户信息
-                <span><a href="#" class="close-login">关闭</a></span>
-            </div>
+        <!-- 遮挡层 -->
+        <div class="layer" v-if="layer">
+            <div id="login" class="login">
 
-            <div class="login-input-content">
-                <div class="login-input">
-                    <label>用户名：</label>
-                    <input type="text" placeholder="请输入姓名" class="list-input">
-                </div>
-                <div class="login-input">
-                    <label>用户备注:</label>
-                    <input type="text" placeholder="请输入备注" class="list-input">
+                <!-- 弹出框头部部分 -->
+                <div class="login-title">修改用户信息
+                    <span><a href="#" class="close-login" @click = 'layer = false'>关闭</a></span>
                 </div>
 
-            </div>
-            <div class="login-button">
-                <a href="#">确认</a>
-                <a href="#">取消</a>
-            </div>
+                <!-- 弹出输入框部分 -->
+                <div class="login-input-content">
 
+                    <!-- 弹出上输入框部分 -->
+                    <div class="login-input">
+                        <label>用户名：</label>
+                        <input type="text" placeholder="请输入姓名" class="list-input" v-model='deitItems'>
+                    </div>
+
+                    <!-- 弹出下输入框部分 -->
+                    <div class="login-input">
+                        <label>用户备注:</label>
+                        <input type="text" placeholder="请输入备注" class="list-input" v-model='deitItems'>
+                    </div>
+                </div>
+
+                <!-- 按钮操作部分 -->
+                <div class="login-button">
+                    <a href="#" @click='qdxg'>确认</a>
+                    <a href="#" @click='layer = false'>取消</a>
+                </div>
+
+            </div>
         </div>
     </div>
-
     </div>
     <script src="../src/vue.js"></script>
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
@@ -265,7 +271,7 @@
             el: '#app',
             data: function () {
                 return {
-                    layer:false,
+                    layer: false,
                     obj: {
                         sousuo: '',
                         name: '',
@@ -306,6 +312,8 @@
                         "username": "铺地",
                         "noteInfo": "好地方"
                     }],
+
+                    deitItems:{}//编辑的数据
                 }
             },
             methods: {
@@ -315,7 +323,7 @@
                         this.use = res.data;
                     });
                 },
-                add: function () {
+                add: function () {//添加数据
                     //请求方式地址绑定
                     axios
                         .post('http://81.68.177.149:8080/userInfo/add', {
@@ -337,7 +345,7 @@
                         })
 
                 },
-                del: function (id) {
+                del: function (id) {//删除数据
                     // this.use.splice(id, 1)
                     console.log(id);
                     axios.delete('http://81.68.177.149:8080/userInfo/delete?id=' + id)
@@ -350,7 +358,7 @@
 
                 },
 
-                chaxun: function () {
+                chaxun: function () {//查询数据
                     axios.get('http://81.68.177.149:8080/userInfo/query')
                         .then((vs) => {
                             let list = vs.data;
@@ -363,7 +371,18 @@
                         })
                 },
 
-            }
+                deit: function(item) {
+                    console.log(item);
+                    this.layer = true;  
+                    //赋值操作  
+                    //
+
+                },
+
+                qdxg: function() {
+                    
+                }
+            }   
         })
     </script>
 </body>
