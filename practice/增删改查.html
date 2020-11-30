@@ -244,13 +244,13 @@
                     <!-- 弹出上输入框部分 -->
                     <div class="login-input">
                         <label>用户名：</label>
-                        <input type="text" placeholder="请输入姓名" class="list-input" v-model='deitItems'>
+                        <input type="text" placeholder="请输入姓名" class="list-input" v-model='deitItems.names'>
                     </div>
 
                     <!-- 弹出下输入框部分 -->
                     <div class="login-input">
                         <label>用户备注:</label>
-                        <input type="text" placeholder="请输入备注" class="list-input" v-model='deitItems'>
+                        <input type="text" placeholder="请输入备注" class="list-input" v-model='deitItems.beizhus'>
                     </div>
                 </div>
 
@@ -314,7 +314,10 @@
                         "noteInfo": "好地方"
                     }],
 
-                    deitItems: {}//编辑的数据
+                    deitItems: {
+                        names:'',
+                        beizhus: '',
+                    }//编辑的数据
                 }
             },
             methods: {
@@ -375,13 +378,21 @@
                 deit: function (item) {
                     console.log(item);
                     this.layer = true;
-                    //赋值操作  
-                    //
+                    
 
                 },
 
                 qdxg: function () {
-
+                    axios.put('http://81.68.177.149:8080/userInfo/update',{
+                            username: this.deitItems.names,
+                            noteInfo: this.deitItems.beizhus,
+                        }).then(() => {
+                            alert('请求成功');
+                            this.query();
+                        })
+                    .catch(() => {
+                            alert('请求失败')
+                        })
                 }
             }
         })
