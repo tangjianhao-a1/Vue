@@ -9,7 +9,7 @@
 <style>
     .bodys {
         margin: 100px auto;
-        width: 1024px;
+        width: 1000px;
     }
 
     input {
@@ -24,7 +24,7 @@
 
     button {
         font-size: 14px;
-        background-color: #4e6ef2;
+        background-color: #f0f0f0;
         border: #ebebeb 1px solid;
         text-align: center;
         height: 45px;
@@ -222,7 +222,8 @@
                         <td>{{item.id}}</td>
                         <td>{{item.username}}</td>
                         <td>{{item.noteInfo}}</td>
-                        <td><span class="delete" @click='del(item.id)'>删除</span><span class="deit" @click='deit(item)'>修改</span></td>
+                        <td><span class="delete" @click='del(item.id)'>删除</span><span class="deit"
+                                @click='deit(item)'>修改</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -234,7 +235,7 @@
 
                 <!-- 弹出框头部部分 -->
                 <div class="login-title">修改用户信息
-                    <span><a href="#" class="close-login" @click = 'layer = false'>关闭</a></span>
+                    <span><a href="#" class="close-login" @click='layer = false'>关闭</a></span>
                 </div>
 
                 <!-- 弹出输入框部分 -->
@@ -313,7 +314,7 @@
                         "noteInfo": "好地方"
                     }],
 
-                    deitItems:{}//编辑的数据
+                    deitItems: {}//编辑的数据
                 }
             },
             methods: {
@@ -371,18 +372,18 @@
                         })
                 },
 
-                deit: function(item) {
+                deit: function (item) {
                     console.log(item);
-                    this.layer = true;  
+                    this.layer = true;
                     //赋值操作  
                     //
 
                 },
 
-                qdxg: function() {
-                    
+                qdxg: function () {
+
                 }
-            }   
+            }
         })
     </script>
 </body>
