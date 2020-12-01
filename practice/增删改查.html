@@ -243,6 +243,11 @@
 
                     <!-- 弹出上输入框部分 -->
                     <div class="login-input">
+                        <label>id：</label>
+                        <input type="text" placeholder="请输入" class="list-input" v-model='editobj.id'>
+                    </div>
+
+                    <div class="login-input">
                         <label>用户名：</label>
                         <input type="text" placeholder="请输入姓名" class="list-input" v-model='editobj.names'>
                     </div>
@@ -315,8 +320,9 @@
                     }],
 
                     editobj: {
+                        id: '',
                         names:'',
-                        beizhus: '',
+                        beizhus: ''
                     }//编辑的数据
                 }
             },
@@ -376,21 +382,24 @@
                 },
 
                 deit: function (item) {
-                    console.log(item);
-                    this.layer = true;    
+                    console.log(item);   
                      this.editobj = {
+                           id: item.id,
                         names: item.username,
                         beizhus: item.noteInfo
-                    } 
+                    },
+                    this.layer = true; 
+
                 },
 
                 qdxg: function () {
                     axios.put('http://81.68.177.149:8080/userInfo/update',{
-                            username: this.deitItems.names,
-                            noteInfo: this.deitItems.beizhus,
+                                  id: this.editobj.id,
+                            username: this.editobj.names,
+                            noteInfo: this.editobj.beizhus,
                         }).then(() => {
                             alert('请求成功');
-                            this.query();
+                            Vue.set(this.use,this.editobj)
                         })
                     .catch(() => {
                             alert('请求失败')
