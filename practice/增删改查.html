@@ -11,7 +11,8 @@
         display: none;
     }
 
-    * { 
+    * {
+        text-shadow: 5px 5px 10px #ddd;
         color: #7c7cad;
     }
 
@@ -39,7 +40,7 @@
     }
 
     button:hover {
-        background-color: #7c7cad;  
+        background-color: #7c7cad;
         color: #ebebeb;
     }
 
@@ -58,7 +59,6 @@
         border-collapse: collapse;
         width: 831px;
         text-align: center;
-        color: #7c7cad;
         border: 1px solid #ebebeb;
         height: 40px;
     }
@@ -100,7 +100,7 @@
     a:hover {
         color: #8e5efb;
     }
-    
+
     .layer_body {
 
         width: 512px;
@@ -220,7 +220,7 @@
                         <td v-cloac>{{item.username}}</td>
                         <td v-cloak>{{item.noteInfo}}</td>
                         <td v-cloak><span class="delete" @click='del(item.id)'>删除</span><span class="deit"
-                                @click='deit(item)'>修改</span></td>
+                                @click='edit(item)'>修改</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -239,10 +239,10 @@
                 <div class="layer_body_content">
 
                     <!-- 弹出上输入框部分 -->
-                    <div class="layer_body_input">
+                    <!--   <div class="layer_body_input">
                         <label>id：</label>
                         <input type="text" placeholder="请输入" class="list-input" v-model='editObj.id'>
-                    </div>
+                    </div> -->
 
                     <div class="layer_body_input">
                         <label>用户名：</label>
@@ -316,7 +316,6 @@
                             }
                             this.userObj = {};
                             this.queryData()
-                            alert('新增成功')
                         }).catch(() => {
                             alert('请求失败')
                         })
@@ -327,7 +326,6 @@
                     console.log(id);
                     axios.delete('http://81.68.177.149:8080/userInfo/delete?id=' + id)
                         .then(() => {
-                            alert('确定删除？')
                             this.queryData();
                         }).catch(() => {
                             alert('请求失败')
@@ -336,7 +334,7 @@
 
                 },
 
-                search: function () {//查询数据
+                search() {//查询数据
                     axios.get('http://81.68.177.149:8080/userInfo/query')
                         .then((vs) => {
                             let list = vs.data;
@@ -349,14 +347,15 @@
                         })
                 },
 
-                deit: function (item) {
+                edit: function (item) {//修改数据
                     console.log(item);
+                    this.layer = true; 
                     this.editObj = {
                         id: item.id,
                         userName: item.username,
                         userNotes: item.noteInfo
-                    },
-                        this.layer = true;
+                    }
+
 
                 },
 
@@ -367,7 +366,6 @@
                         noteInfo: this.editObj.userNotes,
                     }).then(() => {
                         this.layer = false;
-                        alert('修改成功');
                         this.queryData();
 
                     })
