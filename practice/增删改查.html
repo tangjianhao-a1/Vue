@@ -339,7 +339,7 @@
                         .then((vs) => {
                             let list = vs.data;
                             let a = list.filter((vs) => {
-                                if (!this.userObj.queryName) return false;
+                                if (!this.userObj.queryName) return false; 
                                 return vs.username.includes(this.userObj.queryName)
                             });
                             this.use = a;
