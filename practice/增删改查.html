@@ -343,13 +343,12 @@
                                 return vs.username.includes(this.userObj.queryName)
                             });
                             this.use = a;
-                            this.userObj = {};
                         })
                 },
 
                 edit: function (item) {//修改数据
                     console.log(item);
-                    this.layer = true; 
+                    this.layer = true;
                     this.editObj = {
                         id: item.id,
                         userName: item.username,
