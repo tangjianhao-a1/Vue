@@ -7,7 +7,20 @@
     <title>Document</title>
 </head>
 <style>
-    .bodys {
+    [v-cloak] {
+        display: none;
+    }
+
+    * { 
+        color: #7c7cad;
+    }
+
+    a {
+        text-decoration: none;
+        color: #000000;
+    }
+
+    .content {
         margin: 100px auto;
         width: 1000px;
     }
@@ -15,59 +28,54 @@
     input {
         margin-bottom: 5px;
         line-height: 35px;
-        height: 40px;
         width: 365px;
-        border: #ebebeb 1px solid;
         text-indent: 5px;
-        border-radius: 5px;
     }
 
     button {
-        font-size: 14px;
         background-color: #f0f0f0;
-        border: #ebebeb 1px solid;
         text-align: center;
-        height: 45px;
         width: 80px;
-        border-radius: 10px;
+    }
+
+    button:hover {
+        background-color: #7c7cad;  
+        color: #ebebeb;
     }
 
     input,
     button {
         outline: none;
         cursor: pointer;
+        border: #ebebeb 1px solid;
+        height: 45px;
+        border-radius: 10px;
     }
 
-    td,
-    th {
-        border: 1px solid #ebebeb;
-        height: 40px;
-    }
-
-    table {
+    table,
+    th,
+    td {
         border-collapse: collapse;
         width: 831px;
         text-align: center;
         color: #7c7cad;
+        border: 1px solid #ebebeb;
+        height: 40px;
     }
 
     thead tr {
         background-color: #f0f0f0;
     }
 
-    [v-cloak] {
-        display: none;
-    }
-
     h1 {
         width: 200px;
-        height: 30px;
-        margin-bottom: 20px;
+        height: 50px;
+        margin-bottom: 5px;
         margin-left: 300px;
-        color: #7c7cad;
+        font: italic 900 33px "Microsoft YaHei";
     }
 
-    .xingming {
+    .content_query_input {
         width: 740px;
 
     }
@@ -92,45 +100,38 @@
     a:hover {
         color: #8e5efb;
     }
-
-    .login {
+    
+    .layer_body {
 
         width: 512px;
-        height: 280px;
+        height: 290px;
         position: fixed;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
         border: 1px solid #ebebee;
         background: #ffffff;
-        box-shadow: 0px 0px 20px #ddd;
+        box-shadow: 0px 0px 15px #ddd;
         z-index: 9999;
     }
 
-    .login-title {
+    .layer_body_title {
         position: relative;
         width: 100%;
         margin: 10px 0px 0px 0px;
         text-align: center;
         line-height: 40px;
         height: 40px;
-        font-size: 18px;
     }
 
-    .login-input-content {
+    .layer_body_content {
         margin-top: 20px;
     }
 
-    .login-button {
+    .layer_body_button {
         width: 34%;
-        margin: 30px 0px 0px 320px;
-        line-height: 40px;
-        font-size: 14px;
-    }
-
-    a {
-        text-decoration: none;
-        color: #000000;
+        margin: -15px 0px 0px 320px;
+        line-height: 32px;
     }
 
     .layer {
@@ -142,7 +143,7 @@
         background: rgba(0, 0, 0, .3);
     }
 
-    .login-button a {
+    .layer_body_button a {
         display: inline-block;
         border: 1px solid #ebebeb;
         border-radius: 5px;
@@ -151,7 +152,7 @@
         text-align: center;
     }
 
-    .login-input input.list-input {
+    .layer_body_input input.list-input {
         float: left;
         line-height: 35px;
         width: 350px;
@@ -160,29 +161,25 @@
         text-indent: 5px;
     }
 
-    .login-input {
+    .layer_body_input {
         overflow: hidden;
         margin: 0px 0px 20px 0px;
 
     }
 
-    .login-input label {
+    .layer_body_input label {
         float: left;
         width: 90px;
         padding-right: 10px;
         text-align: right;
         height: 35px;
         line-height: 35px;
-        font-size: 14px;
-
-
     }
 
-    .login-title span {
+    .layer_body_title span {
         position: absolute;
         right: -10px;
         top: -30px;
-        font-size: 12px;
         background-color: #ffffff;
         border: 1px solid #ebebeb;
         width: 40px;
@@ -197,15 +194,15 @@
 <body>
     <div id="app">
         <!-- 内容主体部分 -->
-        <div class="bodys">
+        <div class="content">
             <h1>公司人员名单</h1>
             <div class="query">
-                <input type="text" placeholder="请输入姓名" class="xingming" v-model='obj.sousuo'>
-                <button @click="chaxun">查询</button>
+                <input type="text" placeholder="请输入姓名" class="content_query_input" v-model='userObj.queryName'>
+                <button @click="search">查询</button>
             </div>
             <div class="add">
-                <input type="text" placeholder="请输入姓名（必填条件）" v-model='obj.name'>
-                <input type="text" placeholder="请输入备注（必填条件）" v-model='obj.beizhu'>
+                <input type="text" placeholder="请输入姓名（必填条件）" v-model='userObj.addUserName'>
+                <input type="text" placeholder="请输入备注（必填条件）" v-model='userObj.addUserNotes'>
                 <button @click="add">新增</button>
             </div>
             <table sellspacing="0">
@@ -219,10 +216,10 @@
                 </thead>
                 <tbody>
                     <tr :key='item.id' v-for="(item,id) in use">
-                        <td>{{item.id}}</td>
-                        <td>{{item.username}}</td>
-                        <td>{{item.noteInfo}}</td>
-                        <td><span class="delete" @click='del(item.id)'>删除</span><span class="deit"
+                        <td v-cloak>{{item.id}}</td>
+                        <td v-cloac>{{item.username}}</td>
+                        <td v-cloak>{{item.noteInfo}}</td>
+                        <td v-cloak><span class="delete" @click='del(item.id)'>删除</span><span class="deit"
                                 @click='deit(item)'>修改</span></td>
                     </tr>
                 </tbody>
@@ -231,37 +228,37 @@
 
         <!-- 遮挡层 -->
         <div class="layer" v-if="layer">
-            <div id="login" class="login">
+            <div id="layer_body" class="layer_body">
 
                 <!-- 弹出框头部部分 -->
-                <div class="login-title">修改用户信息
+                <div class="layer_body_title">修改用户信息
                     <span><a href="#" class="close-login" @click='layer = false'>关闭</a></span>
                 </div>
 
                 <!-- 弹出输入框部分 -->
-                <div class="login-input-content">
+                <div class="layer_body_content">
 
                     <!-- 弹出上输入框部分 -->
-                    <div class="login-input">
+                    <div class="layer_body_input">
                         <label>id：</label>
-                        <input type="text" placeholder="请输入" class="list-input" v-model='editobj.id'>
+                        <input type="text" placeholder="请输入" class="list-input" v-model='editObj.id'>
                     </div>
 
-                    <div class="login-input">
+                    <div class="layer_body_input">
                         <label>用户名：</label>
-                        <input type="text" placeholder="请输入姓名" class="list-input" v-model='editobj.names'>
+                        <input type="text" placeholder="请输入姓名" class="list-input" v-model='editObj.userName'>
                     </div>
 
                     <!-- 弹出下输入框部分 -->
-                    <div class="login-input">
+                    <div class="layer_body_input">
                         <label>用户备注:</label>
-                        <input type="text" placeholder="请输入备注" class="list-input" v-model='editobj.beizhus'>
+                        <input type="text" placeholder="请输入备注" class="list-input" v-model='editObj.userNotes'>
                     </div>
                 </div>
 
                 <!-- 按钮操作部分 -->
-                <div class="login-button">
-                    <a href="#" @click='qdxg'>确认</a>
+                <div class="layer_body_button">
+                    <a href="#" @click='joinus'>确认</a>
                     <a href="#" @click='layer = false'>取消</a>
                 </div>
 
@@ -278,56 +275,26 @@
             data: function () {
                 return {
                     layer: false,
-                    obj: {
-                        sousuo: '',
-                        name: '',
-                        beizhu: '',
+                    userObj: {
+                        queryName: '',
+                        addUserName: '',
+                        addUserNotes: ''
                     },
-                    use: [{
-                        "id": 98,
-                        "username": "李晓琴",
-                        "noteInfo": "脾气大"
-                    },
-                    {
-                        "id": 99,
-                        "username": "唐建豪",
-                        "noteInfo": "脾气没有"
-                    },
-                    {
-                        "id": 100,
-                        "username": "张三",
-                        "noteInfo": "李四"
-                    },
-                    {
-                        "id": 101,
-                        "username": "王二",
-                        "noteInfo": null
-                    },
-                    {
-                        "id": 102,
-                        "username": "王二",
-                        "noteInfo": "麻子"
-                    },
-                    {
-                        "id": 106,
-                        "username": "李杰",
-                        "noteInfo": "唱歌"
-                    },
-                    {
-                        "id": 107,
-                        "username": "铺地",
-                        "noteInfo": "好地方"
-                    }],
+                    use: [],
 
-                    editobj: {
+                    editObj: {
                         id: '',
-                        names:'',
-                        beizhus: ''
+                        userName: '',
+                        userNotes: ''
                     }//编辑的数据
                 }
             },
+            mounted: function () {
+                this.queryData();
+            },
+
             methods: {
-                query() {
+                queryData() {
                     axios.get('http://81.68.177.149:8080/userInfo/query').then((res) => {
                         console.log(res.data);
                         this.use = res.data;
@@ -338,17 +305,17 @@
                     axios
                         .post('http://81.68.177.149:8080/userInfo/add', {
                             //后端数据库对象名：前端发送请求输入框内容 后端的对象名是死的由后端定义命名
-                            username: this.obj.name,
-                            noteInfo: this.obj.beizhu,
+                            username: this.userObj.addUserName,
+                            noteInfo: this.userObj.addUserNotes,
                         })
                         //then请求成功后怎么样，catch请求失败怎么样 
                         .then(() => {
-                            if (!this.obj.name || !this.obj.beizhu) {
+                            if (!this.userObj.addUserName || !this.userObj.addUserNotes) {
                                 alert('必填不能为空')
                                 return
                             }
-                            this.obj = {};
-                            this.query()
+                            this.userObj = {};
+                            this.queryData()
                             alert('新增成功')
                         }).catch(() => {
                             alert('请求失败')
@@ -360,7 +327,8 @@
                     console.log(id);
                     axios.delete('http://81.68.177.149:8080/userInfo/delete?id=' + id)
                         .then(() => {
-                            this.query();
+                            alert('确定删除？')
+                            this.queryData();
                         }).catch(() => {
                             alert('请求失败')
                         })
@@ -368,40 +336,42 @@
 
                 },
 
-                chaxun: function () {//查询数据
+                search: function () {//查询数据
                     axios.get('http://81.68.177.149:8080/userInfo/query')
                         .then((vs) => {
                             let list = vs.data;
                             let a = list.filter((vs) => {
-                                if (!this.obj.sousuo) return false;
-                                return vs.username.includes(this.obj.sousuo)
+                                if (!this.userObj.queryName) return false;
+                                return vs.username.includes(this.userObj.queryName)
                             });
                             this.use = a;
-                            this.obj = {};
+                            this.userObj = {};
                         })
                 },
 
                 deit: function (item) {
-                    console.log(item);   
-                     this.editobj = {
-                           id: item.id,
-                        names: item.username,
-                        beizhus: item.noteInfo
+                    console.log(item);
+                    this.editObj = {
+                        id: item.id,
+                        userName: item.username,
+                        userNotes: item.noteInfo
                     },
-                    this.layer = true; 
+                        this.layer = true;
 
                 },
 
-                qdxg: function () {
-                    axios.put('http://81.68.177.149:8080/userInfo/update',{
-                                  id: this.editobj.id,
-                            username: this.editobj.names,
-                            noteInfo: this.editobj.beizhus,
-                        }).then(() => {
-                            alert('请求成功');
-                            Vue.set(this.use,this.editobj)
-                        })
-                    .catch(() => {
+                joinus: function () {
+                    axios.put('http://81.68.177.149:8080/userInfo/update', {
+                        id: this.editObj.id,
+                        username: this.editObj.userName,
+                        noteInfo: this.editObj.userNotes,
+                    }).then(() => {
+                        this.layer = false;
+                        alert('修改成功');
+                        this.queryData();
+
+                    })
+                        .catch(() => {
                             alert('请求失败')
                         })
                 }
