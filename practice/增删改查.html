@@ -323,6 +323,9 @@
                 },
                 del: function (id) {//删除数据
                     // this.use.splice(id, 1)
+                    if (!confirm('确定要删除吗？')) {
+                        return;
+                    }
                     console.log(id);
                     axios.delete('http://81.68.177.149:8080/userInfo/delete?id=' + id)
                         .then(() => {
@@ -339,7 +342,7 @@
                         .then((vs) => {
                             let list = vs.data;
                             let a = list.filter((vs) => {
-                                if (!this.userObj.queryName) return false; 
+                                if (this.userObj.queryName == null || this.userObj.queryName == '') return true;
                                 return vs.username.includes(this.userObj.queryName)
                             });
                             this.use = a;
