@@ -217,14 +217,14 @@
                 <tbody>
                     <tr :key='item.id' v-for="(item,id) in use">
                         <td v-cloak>{{item.id}}</td>
-                        <td v-cloac>{{item.username}}</td>
+                        <td v-cloak>{{item.username}}</td>
                         <td v-cloak>{{item.noteInfo}}</td>
                         <td v-cloak><span class="delete" @click='del(item.id)'>删除</span><span class="deit"
                                 @click='edit(item)'>修改</span></td>
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div>k
 
         <!-- 遮挡层 -->
         <div class="layer" v-if="layer">
