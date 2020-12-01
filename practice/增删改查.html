@@ -244,13 +244,13 @@
                     <!-- 弹出上输入框部分 -->
                     <div class="login-input">
                         <label>用户名：</label>
-                        <input type="text" placeholder="请输入姓名" class="list-input" v-model='deitItems.names'>
+                        <input type="text" placeholder="请输入姓名" class="list-input" v-model='editobj.names'>
                     </div>
 
                     <!-- 弹出下输入框部分 -->
                     <div class="login-input">
                         <label>用户备注:</label>
-                        <input type="text" placeholder="请输入备注" class="list-input" v-model='deitItems.beizhus'>
+                        <input type="text" placeholder="请输入备注" class="list-input" v-model='editobj.beizhus'>
                     </div>
                 </div>
 
@@ -314,7 +314,7 @@
                         "noteInfo": "好地方"
                     }],
 
-                    deitItems: {
+                    editobj: {
                         names:'',
                         beizhus: '',
                     }//编辑的数据
@@ -377,9 +377,11 @@
 
                 deit: function (item) {
                     console.log(item);
-                    this.layer = true;
-                    
-
+                    this.layer = true;    
+                     this.editobj = {
+                        names: item.username,
+                        beizhus: item.noteInfo
+                    } 
                 },
 
                 qdxg: function () {
