@@ -59,7 +59,7 @@
         border-collapse: collapse;
         width: 831px;
         text-align: center;
-        border: 1px solid #ebebeb;
+        border: 3px solid #ebebeb;
         height: 40px;
     }
 
@@ -109,7 +109,7 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        border: 1px solid #ebebee;
+        border: 3px solid #ebebee;
         background: #ffffff;
         box-shadow: 0px 0px 15px #ddd;
         z-index: 9999;
@@ -224,7 +224,7 @@
                     </tr>
                 </tbody>
             </table>
-        </div>k
+        </div>
 
         <!-- 遮挡层 -->
         <div class="layer" v-if="layer">
@@ -302,6 +302,13 @@
                 },
                 add: function () {//添加数据
                     //请求方式地址绑定
+                    if (this.userObj.addUserName == '' || this.userObj.addUserName == null) {
+                        return alert('姓名不能为空');
+                    }
+
+                    if (this.userObj.addUserNotes == '' || this.userObj.addUserNotes == null) {
+                        return alert('备注不能为空');
+                    }
                     axios
                         .post('http://81.68.177.149:8080/userInfo/add', {
                             //后端数据库对象名：前端发送请求输入框内容 后端的对象名是死的由后端定义命名
@@ -310,10 +317,6 @@
                         })
                         //then请求成功后怎么样，catch请求失败怎么样 
                         .then(() => {
-                            if (!this.userObj.addUserName || !this.userObj.addUserNotes) {
-                                alert('必填不能为空')
-                                return
-                            }
                             this.userObj = {};
                             this.queryData()
                         }).catch(() => {
