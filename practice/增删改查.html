@@ -303,11 +303,16 @@
                 add: function () {//添加数据
                     //请求方式地址绑定
                     if (this.userObj.addUserName == '' || this.userObj.addUserName == null) {
-                        return alert('姓名不能为空');
+                        return /* alert('姓名不能为空'); */  
+                        //当用户输入时会和分支语句条件进行判断返回一个布尔值  
+                        //逻辑或只需第一个条件为true就返回，第一个条件为fasle，返回第二个条件，
+                        //两者只要满足其一就返回true
+                        //逻辑and如果第一个条件为true，返回第二个条件  
+                        //两个条件都为true则返回ture，必须两条件都会true
                     }
 
                     if (this.userObj.addUserNotes == '' || this.userObj.addUserNotes == null) {
-                        return alert('备注不能为空');
+                        return /* alert('备注不能为空'); */
                     }
                     axios
                         .post('http://81.68.177.149:8080/userInfo/add', {
