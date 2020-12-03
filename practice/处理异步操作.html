@@ -17,6 +17,17 @@
     }  
     wwwq().then((v) => {
         console.log('打印then',v);
-    })
+    })  
+
+    async function data() {
+        let ret = await new Promise(function(resolve,reject){
+            setTimeout(function(){
+                resolve("nihao")
+            },5000)
+        })
+        return ret;
+    }
+    data().then(v => console.log(v))
+    console.log('同步与异步')
 </script>
 </html>
