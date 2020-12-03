@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+<script>
+    async function wwwq() {
+        let res = await axios.get("http://81.68.177.149:8080/userInfo/query");  
+       console.log('res.data',res.data);
+       return res.data
+    }  
+    wwwq().then((v) => {
+        console.log('打印then',v);
+    })
+</script>
+</html>
