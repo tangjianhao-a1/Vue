@@ -1,56 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vue学习</title>  
+    <title>vue学习</title>
     <div id="app">
-        <!-- moustache  表达式 可以赋值，取值，三元 -->  
+        <!-- moustache  表达式 可以赋值，取值，三元 -->
 
-        {{msg ==='hello' ? '等于': '不等于'}}  
-        <div>{{msg}}</div>  
-        <!-- Object -->  
+        {{msg ==='hello' ? '等于': '不等于'}}
+        <div>{{msg}}</div>
+        <!-- Object -->
         <!-- v-model会将msg的值赋予属于框，输入框的值改变了会影响数据 -->
-        <input type="text" v-model= 'msg'>  
+        <input type="text" v-model='msg'>
         <div>{{msg}}</div>
 
-        <!-- v-text ==={{}} 防止{{}}出现在页面上 -->  
-        <div v-text="msg"></div>  
+        <!-- v-text ==={{}} 防止{{}}出现在页面上 -->
+        <div v-text="msg"></div>
 
         <!-- v-html 把html字符当初html渲染 -->
-        <div v-html="p"></div>                                                                                                                                                                                                                    
+        <div v-html="p"></div>
 
-        <!-- v-once 只绑定一次，当数据再次变化，也不导致页面刷新-->    
-         <div v-once>{{msg}} {{msg}}</div>  
+        <!-- v-once 只绑定一次，当数据再次变化，也不导致页面刷新-->
+        <div v-once>{{msg}} {{msg}}</div>
 
-         <!-- 要给变量初始化 -->
-         <div>{{obj.b}}</div>
+        <!-- 要给变量初始化 -->
+        <div>{{obj.b}}</div>
 
-         <div>{{arr[0]}}</div>
+        <div>{{arr[0]}}</div>
+
+        <!-- 指令for -->                         
+        <div>
+            <ul>
+                <li v-for="(item,index) of use">{{item.name}}{{index}}</li>
+            </ul>
+        </div>
+        
+        <!-- 双重for循环指令循环复杂数据类型 -->
+        <div>                   
+            <ul>
+                <li v-for = "(item,index) of use">{{index+1}},{{item.name}}
+                    <ul>                                     
+                        <li v-for = "(c,childIndex) in item.aihao">{{index+1}}.{{childIndex+1}},{{c}}</li>                                     
+                    </ul>
+                </li>
+            </ul>
+        </div>  
+
+        <!-- 循环字符串 -->  
+        <div v-for="item of '唐剑豪'">{{item}}</div>  
+
+        <!-- 循环数字 -->
+        <div v-for="item of 5">{{item}}</div>            
+
+        <!-- 循环对象 -->  
+        <div v-for="(value,key,index) in objs">{{index + 1}}:{{key}}:{{value}}</div>      
 
     </div>
 </head>
-<body>
-    <script src="..\src\vue.js"></script>   
-   <script>
-    //引入vue可以使用Vue构造函数
 
-     let vm = new Vue({
-         el: '#app', //挂载在哪个元素上   
-         data: {
-             //data中的数据会被vm所代理 
-             msg: 'hello',   //可以通过vm.msg取到对相应内容    
-               p: '<h1>你好<h1>',  
-               obj:{b:''},  
-               arr:[1,2,3,4,5],//改变数组中的某一项是监控不到的
-             
-         }
-     });//Object.defineProperty下的get和set方法  
+<body>
+    <script src="..\src\vue.js"></script>
+    <script>
+        //引入vue可以使用Vue构造函数
+
+        let vm = new Vue({
+            el: '#app', //挂载在哪个元素上   
+            data: {
+                //data中的数据会被vm所代理 
+                objs:{name:'唐剑豪',age: 25, qq: 10424477},
+                msg: 'hello',   //可以通过vm.msg取到对相应内容    
+                p: '<h1>你好<h1>',
+                obj: { b: '' },
+                arr: [1, 2, 3, 4, 5],//改变数组中的某一项是监控不到的  
+                use: [{ name: '张三', aihao: ['a'] }, { name: '李四', aihao: ['x', 'y'] }, { name: '麻子', aihao: ['c', 'd'] }]
+
+            }
+        });//Object.defineProperty下的get和set方法  
         //使用变量时，要先初始化，否则新加的属性不会导致页面刷新  
         //vm.arr[0] = 100;错误  
-        //变异方法：pop push shift,unshift sort reverse splice   
-        vm.arr.reverse();   
-        
+        //变异方法：pop push shift,unshift sort reverse splice 
+        vm.arr.reverse();
+
     </script>
 </body>
+
 </html>

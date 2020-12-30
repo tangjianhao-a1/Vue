@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        li {
+            list-style: none;
+            color: red;
+        }
+
+        button {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 关于事件源带括号需要手动添加，不带括号自带事件源 -->
+
+        <!-- 键盘修饰符 -->
+        <input type="text" v-model="val" @keyup.enter.ctrl="add($event)">
+
+        <ul>
+            <li v-for="(a,index) in arr">{{a}} <button @click="remove(index)">删除</button></li>
+        </ul>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                arr: [],
+                val: '',
+            },
+            methods: {
+                add(e) {
+                    console.log(e);
+                    this.arr.unshift(this.val);
+                    this.val = "";
+
+
+                },
+
+                remove(x) {
+                    this.arr = this.arr.filter((item, index) => !(index == x))
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
