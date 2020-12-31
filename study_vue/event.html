@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent {
+            margin: 100px auto;
+            background-color: red;
+            height: 500px;
+            width: 500px;
+        }
+
+        .child {
+            background-color: blue;
+            height: 300px;
+            width: 300px;
+            margin-top: 70px;
+            margin-left: 100px;
+
+        }
+
+        .grandson {
+            background-color: green;
+            height: 131px;
+            width: 158px;
+            margin-top: 53px;
+            margin-left: 69px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        
+        <div @click.capture.stop="parent" class="parent"> parent
+            <div @click="child" class="child">child
+                <div @click="grandson" class="grandson">grandson</div>
+            </div>
+        </div>  
+        <a href="http://www.baidu.com" @click.prevent="parent">去百度</a>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            methods: {
+                parent() {
+                    alert('parent')
+                },
+                child() {
+                    alert('child')
+                },
+                grandson(e) {
+                    alert('grandson');
+                }
+            },
+            data: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

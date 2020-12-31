@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../node_modules/animate.css/animate.css"> 
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="query">
+        <transition-group enter-active-class="animate__animated animate__zoomInUp" leave-active-class="animate__animated animate__zoomOutUp">
+        <div v-for="(a,index) in newArr" :key="index" class="d">{{a}}</div>
+        </transition-group>
+    </div>
+
+    <script src="../src/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            computed:{
+                newArr() {
+                    return this.arr.filter(item =>item == this.query);
+                }
+            },
+            data: {
+                flag: true,
+                arr:['张三','李四','王二','麻子'],
+                query:'',
+            }
+        })
+    </script>
+</body>
+
+</html>
