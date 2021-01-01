@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="a">  
+        {{msg}}
+    </div>  
+    <script src="../src/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el:'#app',  
+            computed:{
+               msg() {//compute默认调用get方法，必须要有return computed不支持异步
+                   let red = /^[0-9]{11}$/
+                   if(red.test(this.a)) {
+                       return '输入正确'
+                   } else if(this.a.length > 11){
+                       return '输入超出了'
+                   } else if(this.a===''||this.a===null){
+                       return '请输入十一位数电话号码'
+                   } 
+               }
+            },
+            data: {
+                a:'',
+            }
+        })
+    </script>
+</body>
+</html>
