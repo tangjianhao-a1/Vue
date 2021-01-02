@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <style>
+        .del {
+            text-decoration: line-through;
+            color: #cccc !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        我的计划安排
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 面板部分 -->
+        <!-- 居中盒子 -->
+        <div class="container">
+            <!-- 行布局 -->
+            <div class="row">
+                <!-- 第一个盒子占十二列 -->
+                <div class="col-md-10">
+                    <div class="panel panel-warning">
+
+                        <!-- 头部部分 -->
+                        <div class="panel-heading">
+                            <h3 class="text-danger">今天有{{count}}件事要完成</h3>
+                            <input type="text" class="form-control" v-model="title" @keyup.enter="add">
+                        </div>
+                        <!-- 身体部分 -->
+
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item" v-for="(todo,index) in filterTodo" @dblclick="remember(todo)">
+                                    <span :class="{del:todo.isSelected}" v-show="cur!=todo">
+                                        <input type="checkbox" v-model="todo.isSelected">
+                                        {{todo.title}}
+                                    </span>
+                                    <input type="text" v-model="todo.title" v-show="cur==todo" @keyup.enter="cancel"
+                                        @blur="cancel" v-focus="cur==todo">
+                                    <button class="pull-right btn btn-danger btn-xs" @click="remove(todo)">删除</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- 底部分 -->
+
+                        <div class="panel-footer">
+                            <ul class="nav nav-pills">
+                                <li role="presentation" :class="{active:hash==='all'}"><a href="#/all" >全部任务</a></li>
+                                <li role="presentation" :class="{active:hash==='finish'}"><a href="#/finish">已完成</a></li>
+                                <li role="presentation" :class="{active:hash==='unfinish'}"><a href="#/unfinish">未完成</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script src="../node_modules/axios/dist/axios.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            directives: {
+                focus(el, bindings) {
+                    //当点击当前li时让内部的输入框获取焦点
+                    if (bindings.value) {
+                        el.focus()  //获取焦点
+                    }
+                }
+            },
+            data: {
+                /* 数据库 */
+                todos: [{
+                    isSelected: false,
+                    title: '睡觉'
+                }, {
+                    isSelected: false,
+                    title: '吃饭'
+                }],
+
+                /* 输入框的值 */
+                title: '',
+
+                /* 控制v-show显示与隐藏 */
+                cur: '',
+                /* hash值 */
+                hash: ''
+            },
+            /* 监控hash值的变化,如果页面已经有了hash，重新刷新页面也要获取hash值 */
+            created() {
+                this.hash = window.location.hash.slice(2) || 'all'
+                window.addEventListener('hashchange', () => {
+                    //当hash值变化，重新操作记录的数据
+                    this.hash = window.location.hash.slice(2);
+                }, false)
+            },
+
+            computed: {
+                /* 计算状态为false的li有多少个 */
+                filterTodo() {
+                    if(this.hash === 'all') return this.todos
+                    if(this.hash === 'finish') return this.todos.filter
+                    (item=>item.isSelected);  
+                    if(this.hash === 'unfinish') return this.todos.filter  
+                    (item=>!item.isSelected);  
+                    return this.todos;
+                },
+                count() {
+                    return this.todos.filter(item => !item.isSelected).length
+                }
+            },
+
+            methods: {
+
+                /* 增加 */
+                add() {
+                    if (this.title === null || this.title === '') {
+                        return false
+                    }
+                    this.todos.push({
+                        isSelected: false,
+                        title: this.title
+                    });
+                    this.title = '';
+                },
+                /* 删除 */
+                remove(todo) {
+                    this.todos = this.todos.filter(item => !(item == todo))
+                },
+                /* 双点击修改事件 通过判断来控制v-show显示与隐藏*/
+                remember(todo) {
+                    this.cur = todo;
+                },
+                /* 当失去焦点和输入完成后通过判断改变v-show显示与隐藏 */
+                cancel() {
+                    this.cur = ''
+                }
+
+            },
+
+        });
+
+    </script>
+
+</body>
+
+</html>

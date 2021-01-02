@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义指令</title>
+</head>
+<body>
+    <div id="app">
+        <button v-color="falg">变色</button> 
+    </div>   
+    <script src="../src/vue.js"></script>  
+    <script>
+        let vm = new Vue({  
+            directives:{
+                color(el,bindings){//el指代的是button按钮
+                   el.style.background = bindings.value
+                }
+            },
+            el: '#app',  
+            data: {
+                falg: 'red',
+            }
+        })
+    </script>
+</body>
+</html>
