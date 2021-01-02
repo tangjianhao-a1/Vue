@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script src="../src/vue.js"></script>  
+    <script>
+        //声明周期：beforeCreate created  
+        //         beforeMount  mounted  
+        //         beforeUpdate undated  
+        //         beforeDestroy destroyed
+        let vm = new Vue({
+              //根实例，初始化时会调用很多方法（钩子函数）  
+            data: {
+                a:1,
+
+            },
+            beforeCreate() {},//1.此方法用不到
+            created() {//2.获取ajax,初始化操作
+                
+            },  
+            beforeMount(){
+                alert(1)
+            },
+            template:'<div>{{a}}</div>',//4.如果有template属性会用模板替换掉外部html，
+            //只要有此属性app中内容就没了意义，只能有一个根元素，不能是文本节点
+            beforeMount() {}, //没有实际意义  
+            mounted(){},//真实dom渲染完了，可以操作dom了  
+            beforeUpdate() {//一般用watch来替换掉
+              //  alert('更新之前')
+            },  
+            updated(){
+               // alert('更新后')
+            },  
+            beforeDestroy() {//可以清除定时器，或事件绑定
+                alert('销毁前')
+            },  
+            destroyed() {
+                alert('销毁后')
+            }
+        });
+        vm.$mount('#app');//3.要保证有编译的元素  
+        vm.$destroy();
+       
+    </script>
+</body>
+</html>
