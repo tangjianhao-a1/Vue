@@ -44,7 +44,8 @@
 
                         <div class="panel-body">
                             <ul class="list-group">
-                                <li class="list-group-item" v-for="(todo,index) in filterTodo" @dblclick="remember(todo)">
+                                <li class="list-group-item" v-for="(todo,index) in filterTodo"
+                                    @dblclick="remember(todo)">
                                     <span :class="{del:todo.isSelected}" v-show="cur!=todo">
                                         <input type="checkbox" v-model="todo.isSelected">
                                         {{todo.title}}
@@ -59,9 +60,11 @@
 
                         <div class="panel-footer">
                             <ul class="nav nav-pills">
-                                <li role="presentation" :class="{active:hash==='all'}"><a href="#/all" >全部任务</a></li>
-                                <li role="presentation" :class="{active:hash==='finish'}"><a href="#/finish">已完成</a></li>
-                                <li role="presentation" :class="{active:hash==='unfinish'}"><a href="#/unfinish">未完成</a></li>
+                                <li role="presentation" :class="{active:hash==='all'}"><a href="#/all">全部任务</a></li>
+                                <li role="presentation" :class="{active:hash==='finish'}"><a href="#/finish">已完成</a>
+                                </li>
+                                <li role="presentation" :class="{active:hash==='unfinish'}"><a href="#/unfinish">未完成</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -83,6 +86,7 @@
                 }
             },
             data: {
+
                 /* 数据库 */
                 todos: [{
                     isSelected: false,
@@ -97,9 +101,11 @@
 
                 /* 控制v-show显示与隐藏 */
                 cur: '',
+
                 /* hash值 */
                 hash: ''
             },
+
             /* 监控hash值的变化,如果页面已经有了hash，重新刷新页面也要获取hash值 */
             created() {
                 this.hash = window.location.hash.slice(2) || 'all'
@@ -112,11 +118,11 @@
             computed: {
                 /* 计算状态为false的li有多少个 */
                 filterTodo() {
-                    if(this.hash === 'all') return this.todos
-                    if(this.hash === 'finish') return this.todos.filter
-                    (item=>item.isSelected);  
-                    if(this.hash === 'unfinish') return this.todos.filter  
-                    (item=>!item.isSelected);  
+                    if (this.hash === 'all') return this.todos
+                    if (this.hash === 'finish') return this.todos.filter
+                        (item => item.isSelected);
+                    if (this.hash === 'unfinish') return this.todos.filter
+                        (item => !item.isSelected);
                     return this.todos;
                 },
                 count() {
@@ -137,17 +143,20 @@
                     });
                     this.title = '';
                 },
+
                 /* 删除 */
                 remove(todo) {
                     this.todos = this.todos.filter(item => !(item == todo))
                 },
+
                 /* 双点击修改事件 通过判断来控制v-show显示与隐藏*/
                 remember(todo) {
                     this.cur = todo;
                 },
+
                 /* 当失去焦点和输入完成后通过判断改变v-show显示与隐藏 */
                 cancel() {
-                    this.cur = ''
+                    this.cur = '';
                 }
 
             },
