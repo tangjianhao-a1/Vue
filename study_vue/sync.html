@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        父亲：{{money}}
+       <!--  <child :m="money" @child-msg="val=>this.money=val"></child> -->  
+       <child :m.sync="money"></child>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                money: 400
+            },
+            components: {
+                child: {
+                    props: ['m'],
+                    template: '<div>儿子 {{m}} <button @click="getMoney()">多要钱</button></div>',
+                    methods: {
+                        getMoney() {
+                            this.$emit('update:m',800);
+                        }
+                    }
+                }
+            }
+
+        })
+    </script>
+</body>
+
+</html>

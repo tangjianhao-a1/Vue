@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 父亲绑定一些事件，儿子触发这个事件，将参数传递过去，单向数据流
+    父亲刷新儿子就刷新，儿子不能改父亲 -->
+    <div id="app">
+        父亲：{{money}}
+        <child :m="money" @child-msg="things"></child>
+    </div>
+    <script src="../src/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                money: 400
+            },
+
+            methods: {
+                things(val) {
+                    this.money = val;
+                }
+            },
+
+            components: {
+                child: {
+                    props: ['m'],
+                    template: '<div>儿子 {{m}} <button @click="getMoney()">多要钱</button></div>',
+                    methods: {
+                        getMoney() {
+                            this.$emit('child-msg', 800);//触发自己的自定义事件
+                        }
+                    }
+                }
+            }
+
+        })
+    </script>
+</body>
+
+</html>
