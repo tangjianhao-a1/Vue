@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+  <cnp :cmovies="movies" :cmessage="message"></cnp>
+  </div>  
+
+  <template id="it">
+    <div>
+      <ul>
+        <li v-for="a in cmovies" :key="a">{{a}}</li>
+      </ul>
+      <h2>{{cmessage}}</h2>
+    </div>
+  </template>
+  <script src="../src/vue.js"></script>  
+  <script>
+    let cnp = {
+      template: '#it',
+      //props:['cmovies','cmessage']  
+      props: {
+       // cmovies: Array,  //类型验证
+        cmessage: {
+          type: String,   //类型
+          default: 'aaaaa',  //默认值
+          required: true, //必传属性
+        },
+        cmovies: {
+          type: Array,
+          defualt() {
+            return []
+          },  
+          required: true,
+        }
+        
+      }
+    }
+    let vm = new Vue({
+      el: '#app',  
+      data: {
+        message: '1',  
+        movies: ['海王','海贼王','海尔兄弟']
+      },
+      components: {
+        cnp
+      }
+    })
+  </script>
+</body>
+</html>
