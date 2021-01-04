@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <modal></modal>  
+    <modal>
+      <template slot-scope="all">
+        <span>{{all.data.join('*')}}</span>
+      </template>
+      
+     </modal>
+     <modal>
+       <template slot-scope="app">
+         <span>{{app.data.join('+')}}</span>
+       </template> 
+     <span slot="acb">123</span>
+     </modal>    
+
+  </div>
+</body>
+<template id="it">
+  <div>
+  <slot :data="arr">
+    <ul>
+      <li v-for="item in arr">{{item}}</li>
+    </ul>
+  </slot>  
+  <slot name="acb">
+    <button>按钮</button>
+  </slot>
+  </div>
+</template>
+<script src="../src/vue.js"></script>
+<script>
+
+  let modal = {
+    template: '#it',
+    data() {
+      return {
+        arr:['a','b','c','d']
+      }
+    }
+  }
+  let vm = new Vue({
+    el: '#app',
+    data: {
+
+    },
+    components: {
+      modal,
+    },
+  })
+
+
+</script>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <modal><span slot="left">标题</span></modal>  
+    <modal><div slot="content">111</div><button slot="right">按钮</button></modal>
+  </div>
+</body>
+<template id="it">
+  <div>
+    <slot name="left"><span>左边</span></slot>
+    <slot name="content"><span>中间</span></slot>
+    <slot name="right"><span>右边</span></slot>  
+   </div>
+</template>
+<script src="../src/vue.js"></script>
+<script>
+
+  let modal = {
+    template: '#it',
+    data() {
+      return {
+        title: '我想死'
+      }
+    }
+  }
+  let vm = new Vue({
+    el: '#app',
+    data: {
+
+    },
+    components: {
+      modal,
+    },
+  })
+
+
+</script>
+
+</html>
