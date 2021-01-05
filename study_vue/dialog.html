@@ -29,14 +29,9 @@
     <div id="app">
         <button @click="add">弹</button>  
         <modal v-show='show' @guanbi="val=>this.show = val"></modal>
-       <!--  <div class="mask">
-            <div class="dialog">
-                <button>关闭</button>
-            </div>
-        </div> -->
     </div>    
     <template id="dialog">
-        <div class="mask">
+        <div class="mask">  
             <div class="dialog">
                 <button @click="close()">关闭</button>
             </div>
@@ -46,7 +41,7 @@
     <script>  
         
         let modal = {
-            props:['show'],
+            
             template:'#dialog',  
             methods: {
                 close() {
